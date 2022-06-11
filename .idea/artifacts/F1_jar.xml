@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="F1:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/F1_jar</output-path>
+    <root id="archive" name="F1.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="F1" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-ds/I05/ocap-ds-I05.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-api/1.2.3/ocap-api-1.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-dvr/I08/ocap-dvr-I08.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/me/tongfei/progressbar/0.5.5/progressbar-0.5.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-math/2.2/commons-math-2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/marvin/plugins/image/org.marvinproject.image.color.blackAndWhite.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/beust/jcommander/1.48/jcommander-1.48.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-fp/I05/ocap-fp-I05.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap/1.2.3/ocap-1.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jline/jline/2.12/jline-2.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/marvin/framework/marvin_1.5.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/jinahya/ocap-hn/I09/ocap-hn-I09.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
