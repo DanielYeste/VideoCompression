@@ -48,9 +48,7 @@ public class Encode {
 
         int heightPointer = 0;
         int widthPointer = 0;
-        int auxHeightPointer = 0;
-        int auxWidthPointer = 0;
-        int hP = 0;
+
         EncodedImages encodedImage;
         for(File filesListed:files) {
             int[][][] tesselsList = new int[nTiles][tesselWidhtSize][tesselHeightSize];
@@ -65,25 +63,19 @@ public class Encode {
                 for (int j = widthPointer; j<(tesselWidhtSize+widthPointer);j++){
                     for(int l = heightPointer; l<(tesselHeightSize+heightPointer);l++) {
                         tesselsList[i][j-widthPointer][l-heightPointer]=img.getRGB(j,l);
-                        hP++;
                     }
-                    if(j == 0){
-                        auxHeightPointer = hP;
-                    }
-                    auxWidthPointer++;
                 }
 
-                widthPointer += auxWidthPointer;
+                widthPointer += tesselWidhtSize;
 
                 if (widthPointer>= w){
                     widthPointer = 0;
-                    auxWidthPointer = 0;
-                    heightPointer+= auxHeightPointer;
+                    heightPointer+=tesselHeightSize;
                 }
-                auxHeightPointer = 0;
-                hP = 0;
 
             }
+            widthPointer = 0;
+            heightPointer = 0;
             encodedImage.setTesselsList(tesselsList);
             encodedListedImages.add(encodedImage);
         }
@@ -118,14 +110,13 @@ public class Encode {
             }
             double avg = diff/(w*h*3);
             double percentage = (avg/255)*100;
-           //System.out.println("Difference: "+percentage);
+            //System.out.println("Difference: "+percentage);
             if(percentage>2){
                 image2.setEliminatedTessels(i);
                 try {
                     FileWriter myWriter = new FileWriter("encode_information.txt");
                     myWriter.write("70 "+ i +"\n");
                     myWriter.close();
-                    System.out.println("Successfully wrote to the file.");
                 } catch (IOException e) {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
@@ -137,6 +128,35 @@ public class Encode {
 
 
     public void saveEncodedImages(int w, int h, ArrayList<EncodedImages> encodedListedImages, int tesselWidhtSize, int tesselHeightSize){
+        Path currentRelativePath = Paths.get("");
+        int heightPointer = 0;
+        int widthPointer = 0;
+        for (int x=0; x<encodedListedImages.size();x++){
+            BufferedImage bufferedImage = new BufferedImage(w,h, BufferedImage.TYPE_INT_RGB);
+            int[][][] tesselsList = encodedListedImages.get(x).getTesselsList();
+            for(int t = 0; t<nTiles;t++) {
+                for (int j = widthPointer; j<(tesselWidhtSize+widthPointer);j++){
+                    for(int l = heightPointer; l<(tesselHeightSize+heightPointer);l++) {
+                        bufferedImage.setRGB(j, l, tesselsList[t][j-widthPointer][l-heightPointer] );
+                    }
+                }
+
+                widthPointer += tesselWidhtSize;
+
+                if (widthPointer>= w){
+                    widthPointer = 0;
+                    heightPointer+= tesselHeightSize;
+                }
+            }
+            File file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/MyImage"+x+".jpg");
+            try {
+                ImageIO.write(bufferedImage, "jpg", file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            widthPointer = 0;
+            heightPointer = 0;
+        }
 
     }
 
