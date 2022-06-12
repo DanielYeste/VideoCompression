@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -42,8 +43,8 @@ public class Encode {
         int h = img.getHeight();
         int w = img.getWidth();
 
-        int tesselWidhtSize = w/(nTiles/2);
-        int tesselHeightSize = h/(nTiles/2);
+        int tesselWidhtSize = (int) (w/(Math.sqrt(nTiles)));
+        int tesselHeightSize = (int) (h/(Math.sqrt(nTiles)));
 
 
         int heightPointer = 0;
@@ -67,8 +68,7 @@ public class Encode {
                 }
 
                 widthPointer += tesselWidhtSize;
-
-                if (widthPointer>= w){
+                if (widthPointer== w){
                     widthPointer = 0;
                     heightPointer+=tesselHeightSize;
                 }
@@ -114,7 +114,6 @@ public class Encode {
             //System.out.println("Difference: "+percentage);
             if(percentage>3){
                 image2.setEliminatedTessels(i);
-                //(0,0,1,1)
                 try {
                     FileWriter myWriter = new FileWriter("encode_information.txt");
                     myWriter.write("70 "+ i +"\n");
@@ -151,12 +150,14 @@ public class Encode {
                     heightPointer+= tesselHeightSize;
                 }
             }
+
             File file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/MyImage"+x+".jpg");
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             widthPointer = 0;
             heightPointer = 0;
         }
