@@ -23,6 +23,7 @@ public class DataHandler {
         this.negative = negative;
         this.averaging = averaging;
         this.encode = encode;
+        this.decode = decode;
         this.nTiles = nTiles;
         this.gop = gop;
         this.quality = quality;
@@ -50,6 +51,7 @@ public class DataHandler {
         return averaging;
     }
     public boolean getEncode(){ return encode;}
+    public boolean getDecode(){ return decode;}
     public int getGop(){return gop;}
     public int getnTiles() {return nTiles;}
 

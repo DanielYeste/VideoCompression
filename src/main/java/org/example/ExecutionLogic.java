@@ -13,6 +13,7 @@ public class ExecutionLogic {
     private FileZipper fileZipper;
     private ImageFilters imageFilters;
     private Encode encode;
+    private Decode decode;
 
     public ExecutionLogic(DataHandler dh){
         this.dh = dh;
@@ -20,6 +21,7 @@ public class ExecutionLogic {
         this.fileZipper = new FileZipper(dh.getOutputFilePath());
         this.imageFilters = new ImageFilters(dh.getBinarization(),dh.getNegative(),dh.getAveraging());
         this.encode = new Encode(dh.getnTiles(),dh.getGop(),dh.getQuality());
+        this.decode = new Decode(dh.getnTiles(),dh.getGop());
     }
 
 
@@ -38,6 +40,10 @@ public class ExecutionLogic {
                 System.out.println("Checking encoding/decoding selection...");
                 if(this.dh.getEncode()){
                     this.encode.encode();
+                }
+
+                if(this.dh.getDecode()){
+                    this.decode.decode();
                 }
 
             }else if (state == 3) {
@@ -106,7 +112,7 @@ public class ExecutionLogic {
             }
         }
         System.out.println("Encoded files size is: " + encodedlength+"bytes");
-        System.out.println("Compression ratio is: " + (unEncodedlength/encodedlength)/100.0f);
+        System.out.println("Compression ratio is: " + ((double) unEncodedlength/encodedlength));
     }
 
 }
