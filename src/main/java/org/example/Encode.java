@@ -18,14 +18,17 @@ public class Encode {
     private int gop;
     private int quality;
     private ArrayList<EncodedImages> encodedListedImages;
-    public Encode(int tiles,int gop,int quality){
+
+    public Encode(int tiles, int gop, int quality){
         this.nTiles = tiles;
         this.gop = gop;
         this.quality = quality;
         this.encodedListedImages = new ArrayList<>();
     }
 
-    public void tesselateImages(){
+    public void encode() throws IOException {
+        ProgressBar pb = new ProgressBar("Encoding files", 100); // name, initial max
+        pb.start();
         Path currentRelativePath = Paths.get("");
         String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(destDir);
@@ -42,7 +45,6 @@ public class Encode {
 
         int tesselWidhtSize = (int) (w/(Math.sqrt(nTiles)));
         int tesselHeightSize = (int) (h/(Math.sqrt(nTiles)));
-
 
         int heightPointer = 0;
         int widthPointer = 0;
@@ -79,51 +81,55 @@ public class Encode {
             encodedListedImages.add(encodedImage);
         }
 
-
         pb.stop();
-        compareTessels(h,w,tesselWidhtSize,tesselHeightSize,encodedListedImages);
 
-        saveEncodedImages(w,h,encodedListedImages,tesselWidhtSize,tesselHeightSize);
+        compareTessels(h, w, tesselWidhtSize, tesselHeightSize, this.encodedListedImages);
 
+        saveEncodedImages(w, h, this.encodedListedImages, tesselWidhtSize, tesselHeightSize);
     }
 
-    public void compareTessels(int h, int w, int tesselWidhtSize, int tesselHeightSize, ArrayList<EncodedImages> encodedListedImages){
-        EncodedImages image1 = encodedListedImages.get(0);
-        EncodedImages image2 = encodedListedImages.get(1);
-        int[][][] tesselsList1 = image1.getTesselsList();
-        int[][][] tesselsList2 = image2.getTesselsList();
-        long diff = 0;
-        for (int i = 0;i<nTiles;i++){
-            for (int j = 0; j<tesselWidhtSize;j++){
-                for(int l = 0; l<tesselHeightSize;l++) {
-                    int val1 = tesselsList1[i][j][l];
-                    int val2 = tesselsList2[i][j][l];
-                    int r1 = (0x00ff0000 & val1) >> 16;
-                    int g1 = (0x0000ff00 & val1) >> 8;
-                    int b1 = (0x000000ff & val1);
-                    int r2 = (0x00ff0000 & val2) >> 16;
-                    int g2 = (0x0000ff00 & val2) >> 8;
-                    int b2 = (0x000000ff & val2);
-                    long data = Math.abs(r1-r2)+Math.abs(g1-g2)+ Math.abs(b1-b2);
-                    diff = diff+data;
+    public void compareTessels(int h, int w, int tesselWidhtSize, int tesselHeightSize, ArrayList<EncodedImages> encodedListedImages) throws IOException {
+
+        FileWriter myWriter = new FileWriter("encode_information.txt");
+
+        for(int index = 0; index < encodedListedImages.size(); index++){
+            if(index % this.gop != 0){
+                EncodedImages imageToCompare = encodedListedImages.get(index - (index % this.gop));
+                EncodedImages imageComparable = encodedListedImages.get(index);
+
+                int[][][] tesselsToCompare = imageToCompare.getTesselsList();
+                int[][][] tesselsComparable = imageComparable.getTesselsList();
+
+                long diff = 0;
+                for (int i = 0; i < nTiles; i++){
+                    for (int j = 0; j < tesselWidhtSize; j++){
+                        for(int l = 0; l < tesselHeightSize; l++) {
+                            int val1 = tesselsToCompare[i][j][l];
+                            int val2 = tesselsComparable[i][j][l];
+                            int r1 = (0x00ff0000 & val1) >> 16;
+                            int g1 = (0x0000ff00 & val1) >> 8;
+                            int b1 = (0x000000ff & val1);
+                            int r2 = (0x00ff0000 & val2) >> 16;
+                            int g2 = (0x0000ff00 & val2) >> 8;
+                            int b2 = (0x000000ff & val2);
+                            long data = Math.abs(r1-r2)+Math.abs(g1-g2)+ Math.abs(b1-b2);
+                            diff = diff+data;
+                        }
+                    }
+                    double avg = diff/(w*h*3);
+                    double percentage = (avg/255)*100;
+                    //System.out.println("Difference: "+percentage);
+                    if(percentage>3){
+                        imageComparable.setEliminatedTessels(i);
+                        //(0,0,1,1)
+                        myWriter.write(index + " "+ i +"\n");
+                    }
                 }
-            }
-            double avg = diff/(w*h*3);
-            double percentage = (avg/255)*100;
-            //System.out.println("Difference: "+percentage);
-            if(percentage>3){
-                image2.setEliminatedTessels(i);
-                try {
-                    FileWriter myWriter = new FileWriter("encode_information.txt");
-                    myWriter.write("70 "+ i +"\n");
-                    myWriter.close();
-                } catch (IOException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
-                }
+                imageComparable.averageTessel(tesselWidhtSize,tesselHeightSize);
             }
         }
-        image2.averageTessel(tesselWidhtSize,tesselHeightSize);
+
+        myWriter.close();
 
     }
 
@@ -132,13 +138,13 @@ public class Encode {
         Path currentRelativePath = Paths.get("");
         int heightPointer = 0;
         int widthPointer = 0;
-        for (int x=0; x<encodedListedImages.size();x++){
-            BufferedImage bufferedImage = new BufferedImage(w,h, BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < encodedListedImages.size(); x++){
+            BufferedImage bufferedImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
             int[][][] tesselsList = encodedListedImages.get(x).getTesselsList();
             for(int t = 0; t<nTiles;t++) {
-                for (int j = widthPointer; j<(tesselWidhtSize+widthPointer);j++){
-                    for(int l = heightPointer; l<(tesselHeightSize+heightPointer);l++) {
-                        bufferedImage.setRGB(j, l, tesselsList[t][j-widthPointer][l-heightPointer] );
+                for (int j = widthPointer; j < (tesselWidhtSize + widthPointer);j++){
+                    for(int l = heightPointer; l < (tesselHeightSize + heightPointer);l++) {
+                        bufferedImage.setRGB(j, l, tesselsList[t][j - widthPointer][l - heightPointer] );
                     }
                 }
 
@@ -164,7 +170,3 @@ public class Encode {
     }
 
 }
-
-
-
-

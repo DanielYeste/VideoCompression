@@ -23,7 +23,7 @@ public class ExecutionLogic {
     }
 
 
-    public void executionHandler(){
+    public void executionHandler() throws IOException {
         boolean executionOn = true;
         long startTime = System.nanoTime();
         while(executionOn) {
@@ -37,7 +37,7 @@ public class ExecutionLogic {
             }else if (state == 2){
                 System.out.println("Checking encoding/decoding selection...");
                 if(this.dh.getEncode()){
-                    this.encode.tesselateImages();
+                    this.encode.encode();
                 }
 
             }else if (state == 3) {
