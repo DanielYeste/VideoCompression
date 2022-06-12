@@ -26,7 +26,8 @@ public class VideoPlayer {
     public void displayImage() throws IOException
     {
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
+        // String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String destDir = currentRelativePath.toAbsolutePath()+"/DecodedImages";
         BufferedImage img;
         File f = new File(destDir);
         File[] files = f.listFiles();
@@ -70,7 +71,8 @@ public class VideoPlayer {
 
     class RemindTask extends TimerTask {
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
+        // String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String destDir = currentRelativePath.toAbsolutePath()+"/DecodedImages";
         BufferedImage img;
         File f = new File(destDir);
         File[] files = f.listFiles();
