@@ -34,28 +34,27 @@ public class EncodedImages {
     }
 
     public void averageTessel(int w,int h){
-        int[][][] auxTexelsList = this.tesselsList.clone();
-        ArrayList<Integer> pixelList = new ArrayList<>();
+        int imageMedian = 0;
+        int pixelCounter = 0;
+        for(int t = 0;t<eliminatedTessels.length;t++){
+            for (int i = 1; i<w;i++){
+                for(int j = 1; j<h;j++){
+                    imageMedian+= tesselsList[t][i][j];
+                    pixelCounter+=1;
+                }
+            }
+        }
+        imageMedian = imageMedian/pixelCounter;
+
         for (int t = 0; t<eliminatedTessels.length;t++){
             if (eliminatedTessels[t] == 1){
                 for (int i = 1; i<w;i++){
                     for(int j = 1; j<h;j++){
-                        pixelList.add(auxTexelsList[t][i-1][j-1]);
-                        pixelList.add(auxTexelsList[t][i-1][j]);
-                        pixelList.add(auxTexelsList[t][i-1][j+1]);
-                        pixelList.add(auxTexelsList[t][i][j-1]);
-                        pixelList.add(auxTexelsList[t][i][j]);
-                        pixelList.add(auxTexelsList[t][i][j+1]);
-                        pixelList.add(auxTexelsList[t][i+1][j-1]);
-                        pixelList.add(auxTexelsList[t][i+1][j]);
-                        pixelList.add(auxTexelsList[t][i+1][j+1]);
-
-                        Collections.sort(pixelList);
-                        tesselsList[t][i][j] = (pixelList.get(pixelList.size()/2) + pixelList.get(pixelList.size()/2 - 1))/2;
-                        pixelList.clear();
+                        tesselsList[t][i][j] = imageMedian;
                     }
                 }
             }
         }
+
     }
 }

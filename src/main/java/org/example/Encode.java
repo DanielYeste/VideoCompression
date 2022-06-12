@@ -83,13 +83,14 @@ public class Encode {
 
         pb.stop();
         compareTessels(h,w,tesselWidhtSize,tesselHeightSize,encodedListedImages);
+
         saveEncodedImages(w,h,encodedListedImages,tesselWidhtSize,tesselHeightSize);
 
     }
 
     public void compareTessels(int h, int w, int tesselWidhtSize, int tesselHeightSize, ArrayList<EncodedImages> encodedListedImages){
         EncodedImages image1 = encodedListedImages.get(0);
-        EncodedImages image2 = encodedListedImages.get(70);
+        EncodedImages image2 = encodedListedImages.get(1);
         int[][][] tesselsList1 = image1.getTesselsList();
         int[][][] tesselsList2 = image2.getTesselsList();
         long diff = 0;
@@ -111,8 +112,9 @@ public class Encode {
             double avg = diff/(w*h*3);
             double percentage = (avg/255)*100;
             //System.out.println("Difference: "+percentage);
-            if(percentage>2){
+            if(percentage>3){
                 image2.setEliminatedTessels(i);
+                //(0,0,1,1)
                 try {
                     FileWriter myWriter = new FileWriter("encode_information.txt");
                     myWriter.write("70 "+ i +"\n");
@@ -123,6 +125,7 @@ public class Encode {
                 }
             }
         }
+        image2.averageTessel(tesselWidhtSize,tesselHeightSize);
 
     }
 
