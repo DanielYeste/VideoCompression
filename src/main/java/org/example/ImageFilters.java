@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -42,12 +43,14 @@ public class ImageFilters {
         ProgressBar pb = new ProgressBar("Negative filter", 100); // name, initial max
         pb.start();
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(destDir);
         File[] files = f.listFiles();
+        Arrays.sort(files);
         BufferedImage img = null;
         int h;
         int w;
+        int fileIterator = 0;
         for(File filesListed:files){
             pb.step();
             try {
@@ -72,13 +75,13 @@ public class ImageFilters {
                     bufferedImage.setRGB(i, j, m);
                 }
             }
-            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/MyImage.jpg");
+            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/Cubo"+String.format("%02d", fileIterator)+".jpg");
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
+            fileIterator++;
         }
         pb.stop();
     }
@@ -87,12 +90,15 @@ public class ImageFilters {
         ProgressBar pb = new ProgressBar("Binarizing images", 100); // name, initial max
         pb.start();
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(destDir);
         File[] files = f.listFiles();
+        Arrays.sort(files);
         BufferedImage img = null;
         int h = 0;
         int w = 0;
+        int fileIterator = 0;
+
         for(File filesListed:files){
             pb.step();
             try {
@@ -122,12 +128,13 @@ public class ImageFilters {
 
                 }
             }
-            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/MyImage.jpg");
+            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/Cubo"+String.format("%02d", fileIterator)+".jpg");
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            fileIterator++;
         }
         pb.stop();
     }
@@ -136,13 +143,15 @@ public class ImageFilters {
         ProgressBar pb = new ProgressBar("Binarizing images", 100); // name, initial max
         pb.start();
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(destDir);
         File[] files = f.listFiles();
+        Arrays.sort(files);
         BufferedImage img = null;
         int h = 0;
         int w = 0;
         ArrayList<Integer> pixelList = new ArrayList<>();
+        int fileIterator = 0;
         for(File filesListed:files){
             pb.step();
             try {
@@ -171,12 +180,13 @@ public class ImageFilters {
                     pixelList.clear();
                 }
             }
-            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/MyImage.jpg");
+            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/Cubo"+String.format("%02d", fileIterator)+".jpg");
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            fileIterator++;
         }
         pb.stop();
 

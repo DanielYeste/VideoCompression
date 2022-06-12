@@ -27,7 +27,7 @@ public class Encode {
 
     public void tesselateImages(){
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(destDir);
         File[] files = f.listFiles();
         Arrays.sort(files);
@@ -150,7 +150,7 @@ public class Encode {
                 }
             }
 
-            File file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/MyImage"+x+".jpg");
+            File file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/Cubo"+String.format("%02d", x)+".jpg");
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
             } catch (IOException e) {

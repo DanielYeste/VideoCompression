@@ -3,12 +3,15 @@ package org.example;
 
 import me.tongfei.progressbar.ProgressBar;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -66,5 +69,33 @@ public class FileUnzipper {
             e.printStackTrace();
         }
         pb.stop();
+        changeImageToJpeg();
+    }
+
+
+    public void changeImageToJpeg(){
+        Path currentRelativePath = Paths.get("");
+        String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        File f = new File(destDir);
+        File[] files = f.listFiles();
+        Arrays.sort(files);
+        BufferedImage img;
+        int i = 0;
+        for(File filesListed:files) {
+
+            try {
+                img = ImageIO.read(new File(filesListed.getAbsolutePath()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/Cubo"+String.format("%02d", i)+".jpg");
+            try {
+                ImageIO.write(img, "jpg", file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            i++;
+        }
     }
 }
