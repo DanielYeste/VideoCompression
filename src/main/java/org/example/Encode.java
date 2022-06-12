@@ -27,8 +27,6 @@ public class Encode {
     }
 
     public void encode() throws IOException {
-        ProgressBar pb = new ProgressBar("Encoding files", 100); // name, initial max
-        pb.start();
         Path currentRelativePath = Paths.get("");
         String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(destDir);
