@@ -64,3 +64,5 @@ Negative filter y convolutional filter
 Negative filter hecho, video hecho.
 Convolutional filter por hacer
 Timer y TimerTask
+
+An ArrayOutOfBoundsException may be thrown if the coordinates are not in bounds. However, explicit bounds checking is not guaranteed.

@@ -26,15 +26,12 @@ public class Encode {
     }
 
     public void tesselateImages(){
-        ProgressBar pb = new ProgressBar("Encoding files", 100); // name, initial max
-        pb.start();
         Path currentRelativePath = Paths.get("");
         String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
         File f = new File(destDir);
         File[] files = f.listFiles();
         Arrays.sort(files);
         BufferedImage img;
-
         try {
             img = ImageIO.read(new File(files[0].getAbsolutePath()));
         } catch (IOException e) {
@@ -51,16 +48,18 @@ public class Encode {
         int widthPointer = 0;
 
         EncodedImages encodedImage;
+        ProgressBar pb = new ProgressBar("Encoding files", 100); // name, initial max
+        pb.start();
         for(File filesListed:files) {
             int[][][] tesselsList = new int[nTiles][tesselWidhtSize][tesselHeightSize];
             encodedImage = new EncodedImages(nTiles,tesselWidhtSize,tesselHeightSize);
+            pb.step();
             try {
                 img = ImageIO.read(new File(filesListed.getAbsolutePath()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             for (int i = 0;i<nTiles;i++){
-                pb.step();
                 for (int j = widthPointer; j<(tesselWidhtSize+widthPointer);j++){
                     for(int l = heightPointer; l<(tesselHeightSize+heightPointer);l++) {
                         tesselsList[i][j-widthPointer][l-heightPointer]=img.getRGB(j,l);
