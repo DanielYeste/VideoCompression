@@ -64,6 +64,7 @@ public class ExecutionLogic {
 
             }else if (state == 5){
                 filesComparation();
+
                 long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;
                 System.out.println("Total execution time in milliseconds: " + timeElapsed / 1000000);

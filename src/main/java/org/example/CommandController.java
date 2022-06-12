@@ -67,7 +67,13 @@ public class CommandController {
                         "• –o, --output <path to file>     Output file name \n" +
                         "• --fps <value>                   Frames per second value of the played video\n" +
                         "• --binarization <value>          Binarization filter, value is used as threshold\n" +
-                        "• --negative                      Negative filter for the video"
+                        "• --negative                      Negative filter for the video\n" +
+                        "• –e,--encode                     Encode the files\n" +
+                        "• –d,--decode                     Decode the files\n" +
+                        "• --nTiles                        Number of tessels that we use to divide the image\n" +
+                        "• –-GOP                           Number of images between two reference frames\n" +
+                        "• –b,--batch                      Does not open the video reproducer\n" +
+                        "• --quality                       Quality factor that determines coincident tessels\n"
         );
     }
 }
