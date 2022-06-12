@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class Encode {
         File[] files = f.listFiles();
         Arrays.sort(files);
         BufferedImage img;
-
         try {
             img = ImageIO.read(new File(files[0].getAbsolutePath()));
         } catch (IOException e) {
@@ -43,23 +43,25 @@ public class Encode {
         int h = img.getHeight();
         int w = img.getWidth();
 
-        int tesselWidhtSize = w/(nTiles/2);
-        int tesselHeightSize = h/(nTiles/2);
+        int tesselWidhtSize = (int) (w/(Math.sqrt(nTiles)));
+        int tesselHeightSize = (int) (h/(Math.sqrt(nTiles)));
 
         int heightPointer = 0;
         int widthPointer = 0;
 
         EncodedImages encodedImage;
+        ProgressBar pb = new ProgressBar("Encoding files", 100); // name, initial max
+        pb.start();
         for(File filesListed:files) {
             int[][][] tesselsList = new int[nTiles][tesselWidhtSize][tesselHeightSize];
             encodedImage = new EncodedImages(nTiles,tesselWidhtSize,tesselHeightSize);
+            pb.step();
             try {
                 img = ImageIO.read(new File(filesListed.getAbsolutePath()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             for (int i = 0;i<nTiles;i++){
-                pb.step();
                 for (int j = widthPointer; j<(tesselWidhtSize+widthPointer);j++){
                     for(int l = heightPointer; l<(tesselHeightSize+heightPointer);l++) {
                         tesselsList[i][j-widthPointer][l-heightPointer]=img.getRGB(j,l);
@@ -67,8 +69,7 @@ public class Encode {
                 }
 
                 widthPointer += tesselWidhtSize;
-
-                if (widthPointer>= w){
+                if (widthPointer== w){
                     widthPointer = 0;
                     heightPointer+=tesselHeightSize;
                 }
@@ -154,12 +155,14 @@ public class Encode {
                     heightPointer+= tesselHeightSize;
                 }
             }
+
             File file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/MyImage"+x+".jpg");
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             widthPointer = 0;
             heightPointer = 0;
         }
@@ -167,7 +170,3 @@ public class Encode {
     }
 
 }
-
-
-
-

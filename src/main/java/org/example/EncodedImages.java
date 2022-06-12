@@ -34,9 +34,9 @@ public class EncodedImages {
     }
 
     public void averageTessel(int w,int h){
-        int imageMedian = 0;
+        double imageMedian = 0;
         int pixelCounter = 0;
-        for(int t = 0;t<eliminatedTessels.length;t++){
+        for(int t = 0;t<eliminatedTessels.length-1;t++){
             for (int i = 1; i<w;i++){
                 for(int j = 1; j<h;j++){
                     imageMedian+= tesselsList[t][i][j];
@@ -50,7 +50,7 @@ public class EncodedImages {
             if (eliminatedTessels[t] == 1){
                 for (int i = 1; i<w;i++){
                     for(int j = 1; j<h;j++){
-                        tesselsList[t][i][j] = imageMedian;
+                        tesselsList[t][i][j] = (int)imageMedian;
                     }
                 }
             }
