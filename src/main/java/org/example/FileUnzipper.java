@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -22,10 +23,12 @@ public class FileUnzipper {
      * Get the path of the input zip and the output dir
      * @param zipFilePath
      */
-    public FileUnzipper(String zipFilePath) {
+    public FileUnzipper(String zipFilePath) throws IOException {
         this.zipFilePath = zipFilePath;
         Path currentRelativePath = Paths.get("");
         this.destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        Path path = Paths.get(destDir);
+        Files.createDirectories(path);
     }
 
     /**
@@ -78,7 +81,6 @@ public class FileUnzipper {
         String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
         File f = new File(destDir);
         File[] files = f.listFiles();
-        Arrays.sort(files);
         BufferedImage img;
         int i = 0;
         for(File filesListed:files) {

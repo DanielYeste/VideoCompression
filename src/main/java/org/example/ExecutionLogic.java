@@ -15,7 +15,7 @@ public class ExecutionLogic {
     private Encode encode;
     private Decode decode;
 
-    public ExecutionLogic(DataHandler dh){
+    public ExecutionLogic(DataHandler dh) throws IOException {
         this.dh = dh;
         this.fileUnzipper = new FileUnzipper(dh.getInputFilePath());
         this.fileZipper = new FileZipper(dh.getOutputFilePath());

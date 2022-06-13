@@ -112,13 +112,12 @@ public class EncodedImages {
             int redAvg = 0;
             int blueAvg = 0;
             int greenAvg = 0;
-            // double imageAvg = 0;
+
             for (int i = 0; i < tesselWidthSize; i++){
                 for(int j = 0; j < tesselHeightSize; j++){
                     redAvg += (0x00ff0000 & tesselsList[t][i][j]) >> 16;
                     greenAvg += (0x0000ff00 & tesselsList[t][i][j]) >> 8;
                     blueAvg += (0x000000ff & tesselsList[t][i][j]);
-                    // imageAvg += tesselsList[t][i][j];
                     pixelCounter += 1;
                 }
             }
@@ -128,7 +127,6 @@ public class EncodedImages {
             String imageAvg = String.valueOf(redAvg) + String.valueOf(greenAvg) + String.valueOf(blueAvg);
             tesselsAvg[t] = Integer.valueOf(imageAvg);
         }
-
 
         for (int t = 0; t < eliminatedTessels.length; t++){
             if (eliminatedTessels[t] == 1){

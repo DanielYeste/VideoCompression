@@ -60,7 +60,6 @@ public class Encode {
                 int[][][] tesselsToCompare = imageToCompare.getTesselsList();
                 int[][][] tesselsComparable = imageComparable.getTesselsList();
 
-
                 for (int i = 0; i < nTiles; i++){
                     long diff = 0;
                     for (int j = 0; j < tesselWidthSize; j++){
@@ -81,7 +80,7 @@ public class Encode {
                     double avg = diff / (tesselWidthSize * tesselHeightSize * 3);
                     double percentage = (avg / 255) * 100;
 
-                    if(percentage > 4){
+                    if(percentage < quality){
                         imageComparable.setEliminatedTessels(i);
                         myWriter.write(index + " "+ i +"\n");
                     }
