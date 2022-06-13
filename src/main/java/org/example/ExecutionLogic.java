@@ -1,5 +1,7 @@
 package org.example;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -69,8 +71,8 @@ public class ExecutionLogic {
                 }
 
             }else if (state == 5){
+                peakNoiseRatio();
                 filesComparation();
-
                 long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;
                 System.out.println("Total execution time in milliseconds: " + timeElapsed / 1000000);
@@ -113,6 +115,26 @@ public class ExecutionLogic {
         }
         System.out.println("Encoded files size is: " + encodedlength+"bytes");
         System.out.println("Compression ratio is: " + ((double) unEncodedlength/encodedlength));
+    }
+
+    public void peakNoiseRatio() throws IOException {
+        PSNR psnr = new PSNR();
+        Path currentRelativePath = Paths.get("");
+        String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
+        File fOriginal = new File(destDir);
+        File[] filesOriginal = fOriginal.listFiles();
+        destDir = currentRelativePath.toAbsolutePath()+"/EncodedImages";
+        File fEncoded = new File(destDir);
+        File[] filesEncoded = fEncoded.listFiles();
+        BufferedImage originalImg;
+        BufferedImage encodedImg;
+        for(int i=0;i<filesOriginal.length;i++){
+            originalImg = ImageIO.read(new File(filesOriginal[i].getAbsolutePath()));
+            encodedImg = ImageIO.read(new File(filesEncoded[i].getAbsolutePath()));
+           PSNR.calculate_PSNR(originalImg,encodedImg);
+
+
+        }
     }
 
 }

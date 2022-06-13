@@ -140,7 +140,7 @@ public class ImageFilters {
     }
 
     private void applyAveraging(){
-        ProgressBar pb = new ProgressBar("Binarizing images", 100); // name, initial max
+        ProgressBar pb = new ProgressBar("Averaging images", 100); // name, initial max
         pb.start();
         Path currentRelativePath = Paths.get("");
         String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";

@@ -18,7 +18,6 @@ public class Main {
             if (commandController.help) {
                 commandController.helpText();
             }else{
-                System.out.println(commandController.averaging);
                 DataHandler dh = new DataHandler(commandController.inputFilePath,
                         commandController.outputFilePath, commandController.fps,
                         commandController.binarization,
@@ -28,7 +27,8 @@ public class Main {
                         commandController.decode,
                         commandController.nTiles,
                         commandController.gop,
-                        commandController.quality);
+                        commandController.quality,
+                        commandController.batch);
                 ExecutionLogic logic = new ExecutionLogic(dh);
                 System.out.println("Ready for the execution");
                 logic.executionHandler();

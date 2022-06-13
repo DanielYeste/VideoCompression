@@ -15,7 +15,10 @@ public class DataHandler {
     private int gop;
     private int quality;
 
-    public DataHandler(String inputFilePath, String outputFilePath, int fps, int binarization, boolean negative, int averaging, boolean encode, boolean decode, int nTiles, int gop, int quality){
+
+    private boolean batch;
+
+    public DataHandler(String inputFilePath, String outputFilePath, int fps, int binarization, boolean negative, int averaging, boolean encode, boolean decode, int nTiles, int gop, int quality, boolean batch){
         this.inputFilePath = inputFilePath;
         this.outputFilePath = outputFilePath;
         this.fps = fps;
@@ -27,6 +30,7 @@ public class DataHandler {
         this.nTiles = nTiles;
         this.gop = gop;
         this.quality = quality;
+        this.batch = this.batch;
     }
 
 
@@ -56,5 +60,11 @@ public class DataHandler {
     public int getnTiles() {return nTiles;}
 
     public int getQuality() {return quality;}
+
+    public boolean isBatch() {
+        return batch;
+    }
+
+
 
 }
