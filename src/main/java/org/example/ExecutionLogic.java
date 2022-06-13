@@ -23,7 +23,7 @@ public class ExecutionLogic {
         this.fileZipper = new FileZipper(dh.getOutputFilePath());
         this.imageFilters = new ImageFilters(dh.getBinarization(),dh.getNegative(),dh.getAveraging());
         this.encode = new Encode(dh.getnTiles(),dh.getGop(),dh.getQuality());
-        this.decode = new Decode(dh.getnTiles(),dh.getGop());
+        this.decode = new Decode();
     }
 
 
@@ -43,6 +43,7 @@ public class ExecutionLogic {
                 if(this.dh.getEncode()){
                     System.out.println("Encoding files");
                     this.encode.encode();
+                    filesComparation();
                 }
 
             }else if (state == 3) {
@@ -50,13 +51,17 @@ public class ExecutionLogic {
                 if(this.dh.getDecode()){
                     System.out.println("Decoding files");
                     this.decode.decode();
+                    System.out.println("Calculating Peak-Noise-Ratio");
+                    peakNoiseRatio();
                 }
             }else if (state == 4) {
-                videoPlayer = new VideoPlayer(this.dh);
-                try {
-                    videoPlayer.displayImage();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if(!dh.isBatch()){
+                    videoPlayer = new VideoPlayer((int) dh.getFps(), dh.getDecode());
+                    try {
+                        videoPlayer.displayImage();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
             } else if (state == 5){
@@ -72,13 +77,10 @@ public class ExecutionLogic {
                         throw new RuntimeException(e);
                     }
                 }
-            }else if (state == 6){
-                peakNoiseRatio();
-                filesComparation();
+            }else{
                 long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;
                 System.out.println("Total execution time in milliseconds: " + timeElapsed / 1000000);
-            }else{
                 executionOn = false;
             }
             state++;

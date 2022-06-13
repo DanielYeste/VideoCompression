@@ -23,7 +23,7 @@ public class FileZipper {
         ProgressBar pb = new ProgressBar("Zipping files", 100); // name, initial max
         pb.start();
         Path currentRelativePath = Paths.get("");
-        String originDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+        String originDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
         File f = new File(originDir);
         File[] files = f.listFiles();
         FileOutputStream fos = new FileOutputStream(fileName);

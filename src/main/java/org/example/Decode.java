@@ -18,9 +18,7 @@ public class Decode {
     private int gop;
     private ArrayList<EncodedImages> encodedListedImages;
 
-    public Decode(int tiles, int gop){
-        this.nTiles = tiles;
-        this.gop = gop;
+    public Decode(){
         this.encodedListedImages = new ArrayList<>();
     }
 
@@ -32,6 +30,13 @@ public class Decode {
         File f = new File(destDir);
 
         File[] files = f.listFiles();
+
+        File file = new File("encode_information.txt");
+        Scanner sc = new Scanner(file);
+
+        String line = sc.nextLine();
+        this.nTiles = Integer.valueOf(line.split(" ")[0]);
+        this.gop = Integer.valueOf(line.split(" ")[1]);
 
         for(File image: files) {
             EncodedImages encodedImage = new EncodedImages(nTiles, image);
@@ -49,9 +54,10 @@ public class Decode {
 
         File file = new File("encode_information.txt");
         Scanner sc = new Scanner(file);
+        String line = sc.nextLine();
 
         while(sc.hasNextLine()){
-            String line = sc.nextLine();
+            line = sc.nextLine();
             int numImage = Integer.valueOf(line.split(" ")[0]);
             int numTessel = Integer.valueOf(line.split(" ")[1]);
 

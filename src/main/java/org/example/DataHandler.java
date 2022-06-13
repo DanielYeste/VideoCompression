@@ -30,7 +30,7 @@ public class DataHandler {
         this.nTiles = nTiles;
         this.gop = gop;
         this.quality = quality;
-        this.batch = this.batch;
+        this.batch = batch;
     }
 
 

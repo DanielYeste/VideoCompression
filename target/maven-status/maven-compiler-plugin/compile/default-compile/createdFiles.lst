@@ -5,8 +5,10 @@ org\example\VideoPlayer$RemindTask.class
 org\example\DataHandler.class
 org\example\CommandController.class
 org\example\FileUnzipper.class
+org\example\PSNR.class
 org\example\ImageFilters.class
 org\example\Main.class
 org\example\Encode.class
 org\example\VideoPlayer.class
 org\example\FileZipper.class
+org\example\VideoPlayer$1.class

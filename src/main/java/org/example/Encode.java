@@ -50,6 +50,8 @@ public class Encode {
 
         FileWriter myWriter = new FileWriter("encode_information.txt");
 
+        myWriter.write(nTiles + " "+ gop +"\n");
+
         int tesselWidthSize = encodedListedImages.get(0).getTesselWidthSize();
         int tesselHeightSize = encodedListedImages.get(0).getTesselHeightSize();
 
