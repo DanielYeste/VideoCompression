@@ -35,7 +35,7 @@ public class FileUnzipper {
      * Method that proceeds to unzip the desired file to output
      * the files in the selected dir, predefined as UnzippedImages
      */
-    public void unzip() {
+    public void unzip() throws IOException {
         ProgressBar pb = new ProgressBar("Unzipping files", 100); // name, initial max
         pb.start();
         File dir = new File(destDir);
@@ -76,9 +76,12 @@ public class FileUnzipper {
     }
 
 
-    public void changeImageToJpeg(){
+    public void changeImageToJpeg() throws IOException {
         Path currentRelativePath = Paths.get("");
-        String destDir = currentRelativePath.toAbsolutePath()+"/UnzippedImages";
+
+        Path path = Paths.get(currentRelativePath.toAbsolutePath()+"/ReproducedImages");
+        Files.createDirectories(path);
+
         File f = new File(destDir);
         File[] files = f.listFiles();
         BufferedImage img;

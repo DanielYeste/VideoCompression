@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.Buffer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -96,8 +97,11 @@ public class Encode {
     }
 
 
-    public void saveEncodedImages(){
+    public void saveEncodedImages() throws IOException {
         Path currentRelativePath = Paths.get("");
+
+        Path path = Paths.get(currentRelativePath.toAbsolutePath()+"/EncodedImages");
+        Files.createDirectories(path);
 
         for (int x = 0; x < encodedListedImages.size(); x++){
 
