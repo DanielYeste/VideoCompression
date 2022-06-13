@@ -10,10 +10,10 @@ java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompress
 Filter Negative + Video
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --negative --fps 24
 
-Filter Binarization
-java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --binarization 126 --fps 24
+Filter Binarization = 200
+java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --binarization 200 --fps 24
 
-Filter Averaging
+Filter Averaging = 3
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --averaging 3 --fps 24
 
 Encode Quality = 7 nTiles = 16 GOP = 4
@@ -31,8 +31,8 @@ java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompress
 Zip + Unzip + Encode + Decode + Quality = 7 + nTiles = 16 + GOP = 4
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --fps 24 -o C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Zipped.zip --encode --decode --quality 7 --nTiles 16 --GOP 4
 
-Zip + Unzip + Encode + Decode + Quality = 7 + nTiles = 16 + GOP = 4 + Binarization = 126
-java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --fps 24 -o C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Zipped.zip --encode --decode --quality 7 --nTiles 16 --GOP 4 --binarization 126
+Zip + Unzip + Encode + Decode + Quality = 7 + nTiles = 16 + GOP = 4 + Binarization = 200
+java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --fps 24 -o C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Zipped.zip --encode --decode --quality 7 --nTiles 16 --GOP 4 --binarization 200
 
 Zip + Unzip + Encode + Decode + Quality = 7 + nTiles = 16 + GOP = 4 + Averaging = 3
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --fps 24 -o C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Zipped.zip --encode --decode --quality 7 --nTiles 16 --GOP 4 --averaging 3
