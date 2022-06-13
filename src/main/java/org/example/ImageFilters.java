@@ -63,16 +63,31 @@ public class ImageFilters {
             BufferedImage bufferedImage = new BufferedImage(w,h, BufferedImage.TYPE_INT_RGB);
             for (int i = 0; i<w;i++){
                 for(int j = 0; j<h;j++){
-                    int val = img.getRGB(i, j);
-                    int r = (0x00ff0000 & val) >> 16;
+                    // int val = img.getRGB(i, j);
+                    /*int r = (0x00ff0000 & val) >> 16;
                     int g = (0x0000ff00 & val) >> 8;
                     int b = (0x000000ff & val);
                     r = 255-r;
                     g = 255-g;
                     b = 255-b;
-                    int m=(r+g+b);
+                    int m=(r+g+b);*/
+
+                    int p = img.getRGB(i, j);
+                    int a = (p >> 24) & 0xff;
+                    int r = (p >> 16) & 0xff;
+                    int g = (p >> 8) & 0xff;
+                    int b = p & 0xff;
+
+                    // subtract RGB from 255
+                    r = 255 - r;
+                    g = 255 - g;
+                    b = 255 - b;
+
+                    // set new RGB value
+                    p = (a << 24) | (r << 16) | (g << 8) | b;
+
                     // for light color it set white
-                    bufferedImage.setRGB(i, j, m);
+                    bufferedImage.setRGB(i, j, p);
                 }
             }
             File file = new File(currentRelativePath.toAbsolutePath()+"/ReproducedImages/Cubo"+String.format("%02d", fileIterator)+".jpg");
