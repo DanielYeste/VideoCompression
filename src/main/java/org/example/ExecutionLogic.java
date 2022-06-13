@@ -17,7 +17,7 @@ public class ExecutionLogic {
     private Encode encode;
     private Decode decode;
 
-    public ExecutionLogic(DataHandler dh){
+    public ExecutionLogic(DataHandler dh) throws IOException {
         this.dh = dh;
         this.fileUnzipper = new FileUnzipper(dh.getInputFilePath());
         this.fileZipper = new FileZipper(dh.getOutputFilePath());
@@ -39,16 +39,19 @@ public class ExecutionLogic {
                 imageFilters.handleFilters();
 
             }else if (state == 2){
-                System.out.println("Checking encoding/decoding selection...");
+                System.out.println("Checking encoding selection...");
                 if(this.dh.getEncode()){
+                    System.out.println("Encoding files");
                     this.encode.encode();
                 }
 
+            }else if (state == 3) {
+                System.out.println("Checking decoding selection...");
                 if(this.dh.getDecode()){
+                    System.out.println("Decoding files");
                     this.decode.decode();
                 }
-
-            }else if (state == 3) {
+            }else if (state == 4) {
                 videoPlayer = new VideoPlayer(this.dh);
                 try {
                     videoPlayer.displayImage();
@@ -56,7 +59,7 @@ public class ExecutionLogic {
                     throw new RuntimeException(e);
                 }
 
-            } else if (state == 4){
+            } else if (state == 5){
                 System.out.println(dh.getOutputFilePath());
                 if(dh.getOutputFilePath().isEmpty()){
                     System.out.println("Non existent output path, can't zip the files");
@@ -72,6 +75,7 @@ public class ExecutionLogic {
 
             }else if (state == 5){
                 peakNoiseRatio();
+            }else if (state == 6){
                 filesComparation();
                 long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;

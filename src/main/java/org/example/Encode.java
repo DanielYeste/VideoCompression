@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.Buffer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -60,7 +61,6 @@ public class Encode {
                 int[][][] tesselsToCompare = imageToCompare.getTesselsList();
                 int[][][] tesselsComparable = imageComparable.getTesselsList();
 
-
                 for (int i = 0; i < nTiles; i++){
                     long diff = 0;
                     for (int j = 0; j < tesselWidthSize; j++){
@@ -81,7 +81,7 @@ public class Encode {
                     double avg = diff / (tesselWidthSize * tesselHeightSize * 3);
                     double percentage = (avg / 255) * 100;
 
-                    if(percentage > 4){
+                    if(percentage < quality){
                         imageComparable.setEliminatedTessels(i);
                         myWriter.write(index + " "+ i +"\n");
                     }
@@ -97,8 +97,11 @@ public class Encode {
     }
 
 
-    public void saveEncodedImages(){
+    public void saveEncodedImages() throws IOException {
         Path currentRelativePath = Paths.get("");
+
+        Path path = Paths.get(currentRelativePath.toAbsolutePath()+"/EncodedImages");
+        Files.createDirectories(path);
 
         for (int x = 0; x < encodedListedImages.size(); x++){
 

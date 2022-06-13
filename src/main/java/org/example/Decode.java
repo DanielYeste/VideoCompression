@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Decode {
         this.encodedListedImages = new ArrayList<>();
     }
 
-    public void decode() throws FileNotFoundException {
+    public void decode() throws IOException {
         Path currentRelativePath = Paths.get("");
 
         String destDir = currentRelativePath.toAbsolutePath()+"/EncodedImages";
@@ -66,8 +67,11 @@ public class Decode {
         pb.stop();
     }
 
-    public void saveDecodedImages(){
+    public void saveDecodedImages() throws IOException {
         Path currentRelativePath = Paths.get("");
+
+        Path path = Paths.get(currentRelativePath.toAbsolutePath()+"/DecodedImages");
+        Files.createDirectories(path);
 
         for (int x = 0; x < encodedListedImages.size(); x++){
 
