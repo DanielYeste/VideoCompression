@@ -27,7 +27,7 @@ public class VideoPlayer {
 
     public void displayImage() throws IOException
     {
-        if(dh.isBatch()){
+        if(!dh.isBatch()){
             timer = new Timer();
             timer.schedule(new RemindTask(),1000,(int)this.fps);
         }else{

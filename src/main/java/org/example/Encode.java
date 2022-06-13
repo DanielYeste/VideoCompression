@@ -108,11 +108,8 @@ public class Encode {
             BufferedImage bufferedImage = encodedListedImages.get(x).buildBufferedImage();
 
             File file = new File("");
-            if(x/10 < 1){
-                file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/MyImage0"+x+".jpg");
-            }else{
-                file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/MyImage"+x+".jpg");
-            }
+            file = new File(currentRelativePath.toAbsolutePath()+"/EncodedImages/Cubo"+String.format("%02d", x)+".jpg");
+
 
             try {
                 ImageIO.write(bufferedImage, "jpg", file);

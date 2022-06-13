@@ -72,10 +72,8 @@ public class ExecutionLogic {
                         throw new RuntimeException(e);
                     }
                 }
-
-            }else if (state == 5){
-                peakNoiseRatio();
             }else if (state == 6){
+                peakNoiseRatio();
                 filesComparation();
                 long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;

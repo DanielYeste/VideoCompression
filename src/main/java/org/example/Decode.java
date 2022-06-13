@@ -77,11 +77,8 @@ public class Decode {
 
             BufferedImage bufferedImage = encodedListedImages.get(x).buildBufferedImage();
             File file = new File("");
-            if(x/10 < 1){
-                file = new File(currentRelativePath.toAbsolutePath()+"/DecodedImages/MyImage0"+x+".jpg");
-            }else{
-                file = new File(currentRelativePath.toAbsolutePath()+"/DecodedImages/MyImage"+x+".jpg");
-            }
+            file = new File(currentRelativePath.toAbsolutePath()+"/DecodedImages/Cubo"+String.format("%02d", x)+".jpg");
+
 
             try {
                 ImageIO.write(bufferedImage, "jpg", file);
