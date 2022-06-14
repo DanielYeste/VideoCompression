@@ -75,7 +75,10 @@ public class FileUnzipper {
         changeImageToJpeg();
     }
 
-
+    /**
+     * Change the unzipped files format to jpeg, indifferently to the start format.
+     * @throws IOException
+     */
     public void changeImageToJpeg() throws IOException {
         Path currentRelativePath = Paths.get("");
 
