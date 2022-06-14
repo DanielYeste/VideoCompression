@@ -14,7 +14,7 @@ Para desarrollar esta práctica, hemos utilizado el IDE Intell IJ Idea y hemos b
 
 
 
-# Ejecución
+## Ejecución
 
 Para la ejecución de nuestro algoritmo, se deben usar los comandos
 que se pueden encontrar en: 
@@ -34,6 +34,12 @@ Ejemplo para la ejecución por consola sin filtros:
 `
 java -jar F1.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --fps 60 -o /home/danielyeste/Desktop/Das/Tet.zip
 `
+
+## Especificaciones para la ejecución
+
+1. Si se intenta reproducir el vídeo, es decir se ejecuta el programa sin el argumento --batch se debe especificar el número de fps, con --fps <value>.
+2. Para usar el argumento de codificación --encode, se han de especificar el gop(--GOP <value>) seekRange(--seekRange<value>) y el número de teselas 
+ (--nTiles<4,16,64>).
 
 También se puede ejecutar desde el IDE con
 argumentos sin ningun problema. El proyecto se ha realizado en 
