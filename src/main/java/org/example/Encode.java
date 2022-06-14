@@ -19,14 +19,26 @@ public class Encode {
     private int gop;
     private int quality;
     private ArrayList<EncodedImages> encodedListedImages;
-
+    
+   /**
+     * Encode initializer that takes all the data needed for encoding our images.
+     * Initializes our array list of images
+     * @param tiles
+     * @param gop
+     * @param quality
+     */
     public Encode(int tiles, int gop, int quality){
         this.nTiles = tiles;
         this.gop = gop;
         this.quality = quality;
         this.encodedListedImages = new ArrayList<>();
     }
-
+    
+    /**
+     * Main encoding thread. Saves all image objects in an array, and calls
+     * the subsequent methods for the tesselation and saving of the images.
+     * @throws IOException
+     */
     public void encode() throws IOException {
         Path currentRelativePath = Paths.get("");
         String destDir = currentRelativePath.toAbsolutePath()+"/ReproducedImages";
@@ -42,7 +54,12 @@ public class Encode {
 
         saveEncodedImages();
     }
-
+    
+    /**
+     * Compare the tessels between the images as needed. Saves the information
+     * in a file to decode the images if needed.
+     * @throws IOException
+     */
     public void compareTessels() throws IOException {
 
         ProgressBar pb = new ProgressBar("Encoding files", 100); // name, initial max
@@ -97,8 +114,11 @@ public class Encode {
         pb.stop();
 
     }
-
-
+    
+    /**
+     * Saves encoded images in the specified path /EncodedImages
+     * @throws IOException
+     */
     public void saveEncodedImages() throws IOException {
         Path currentRelativePath = Paths.get("");
 
