@@ -17,6 +17,24 @@ public class DataHandler {
 
 
     private boolean batch;
+    
+    /**
+     * Initializes all the paramaters given form the argument line that we need to execute
+     * the whole program and holds it to share it between the different objects.
+     * Known as data class.
+     * @param inputFilePath
+     * @param outputFilePath
+     * @param fps
+     * @param binarization
+     * @param negative
+     * @param averaging
+     * @param encode
+     * @param decode
+     * @param nTiles
+     * @param gop
+     * @param quality
+     * @param batch
+     */
 
     public DataHandler(String inputFilePath, String outputFilePath, int fps, int binarization, boolean negative, int averaging, boolean encode, boolean decode, int nTiles, int gop, int quality, boolean batch){
         this.inputFilePath = inputFilePath;
