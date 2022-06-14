@@ -1,4 +1,5 @@
-﻿# Implementación F1
+﻿# Implementación Codec de video
+ Este proyecto se basa en la realización de un codec para la visualización posterior del vídeo. Principalmente sus uso se basa en la compresión y descompresión de archivos, codificación y descodificación de imágenes y posterior visualización de estas. Por último, también se aporta información acerca de la eficacia de compresión y descompresión en susodicho proceso.
 
 
 > **Autores:** Daniel Yeste y Salvador Mira .
@@ -32,37 +33,14 @@ Ejemplo para la ejecución por consola sin filtros:
 
 `
 java -jar F1.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --fps 60 -o /home/danielyeste/Desktop/Das/Tet.zip
-`
-## Informacion modificada
-Tras los problemas en clase, hemos hecho un fix de última hora
-para que se pueda probar sin problema. Simplemente teníamos que poner las librerías en la carpeta del JAR.
-Por tanto, es importante que para ejecutar el **jar** desde consola se haga desde
-la carpeta de este mismo proyecto, la cual se encuentra en:
-
-`
-F1/out/artifacts/F1_jar
-`
 
 También se puede ejecutar desde el IDE con
 argumentos sin ningun problema. El proyecto se ha realizado en 
 jdk 1.8 y es un tipo de proyecto maven, un organizador de 
 paquetes de java. Para su correcta importación y ejecución
 se debe trabajar en un proyecto maven.
-
+`
+## Informacion modificada
 
 # Últimas correciones
-Se han eliminado las preguntas en la interfaz para agilizar el proceso de ejecución.
-Eliminación arte AASCII.
-Correción en uso de filtros
-
-Rehacer la parte de vídeo para usar los hilos.
-
-Rehacer la parte de filtros de imagen. MarvinImage
-
-Negative filter y convolutional filter
- 
-Negative filter hecho, video hecho.
-Convolutional filter por hacer
-Timer y TimerTask
-
-An ArrayOutOfBoundsException may be thrown if the coordinates are not in bounds. However, explicit bounds checking is not guaranteed.
+Respecto a la demostración se han añadido las opciones para seekRange de manera que el algoritmo se adecue a las peticiones. También se han fixeado los problemas con GOP(Group of Files).
