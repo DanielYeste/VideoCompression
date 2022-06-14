@@ -19,12 +19,22 @@ public class VideoPlayer {
     Timer timer2;
     private double fps;
     boolean decoding;
-
+    
+    /**
+     * Initializes our video player with the datahandler to get all the information
+     * that he needs.
+     * @param dataHandler
+     */
     public VideoPlayer(int fps, boolean decoding){
         this.fps = 1000/fps;
         this.decoding = decoding;
     }
-
+    
+    /**
+     * Controls the image display. Initializes one or two threads if required, both
+     * initializes a JFrame that reproduces our video.
+     * @throws IOException
+     */
     public void displayImage() throws IOException
     {
         timer = new Timer();
