@@ -15,7 +15,7 @@ public class EncodedImages {
     private int nTiles;
 
     /**
-     * Inicialitza una imatge teselada.
+     * Initializes a tesselated image.
      * @param nTiles Quantitat de teseles en les que es vol dividir la imatge.
      * @param file Arxiu amb la imatge que volem teselar.
      */
@@ -28,8 +28,8 @@ public class EncodedImages {
     }
 
     /**
-     * Tesela una imatge donada a partir d'un arxiu.
-     * @param file Arxiu amb la imatge a teselar.
+     * Tesselate an image given a file.
+     * @param file File with the image to tessel.
      */
     private void tesselateImage(File file){
         int widthPointer = 0;
@@ -66,8 +66,8 @@ public class EncodedImages {
     }
 
     /**
-     * Retorna la llista de teseles.
-     * @return Llista de teseles.
+     * Returns the list of tessels.
+     * @return tessels list.
      */
     public int[][][] getTesselsList() {
         return tesselsList;
@@ -82,7 +82,7 @@ public class EncodedImages {
     }
 
     /**
-     * Retorna l'amplada de les teseles.
+     * Return tessels width.
      * @return Amplada de les teseles.
      */
     public int getTesselWidthSize() {
@@ -90,7 +90,7 @@ public class EncodedImages {
     }
 
     /**
-     * Retorna l'alçada de les teseles.
+     * Return tessels height.
      * @return Alçada de les teseles.
      */
     public int getTesselHeightSize() {
@@ -98,7 +98,7 @@ public class EncodedImages {
     }
 
     /**
-     * Calcula el color average de cada tesela i la pinta.
+     * Calculate average color of every tessel and paints it.
      */
     public void averageTessel(){
         int[] tesselsAvg = new int[eliminatedTessels.length];
@@ -139,8 +139,8 @@ public class EncodedImages {
     }
 
     /**
-     * Construeix una BI a partir de la llista de teseles.
-     * @return BI amb la imatge.
+     * Builds BI from the tessels list.
+     * @return BI from the image.
      */
     public BufferedImage buildBufferedImage(){
         int w = this.tesselWidthSize * ( (int) Math.sqrt(nTiles));
