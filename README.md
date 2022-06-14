@@ -40,6 +40,12 @@ jdk 1.8 y es un tipo de proyecto maven, un organizador de
 paquetes de java. Para su correcta importación y ejecución
 se debe trabajar en un proyecto maven.
 `
+##Libreras utilizadas
+
+·Jcommander
+·Tongfei ProgressBar
+.Apache Math
+· Jinahyay Ocap
 
 # Últimas correciones
 Respecto a la demostración se han añadido las opciones para seekRange de manera que el algoritmo se adecue a las peticiones. También se han fixeado los problemas con GOP(Group of Files).
