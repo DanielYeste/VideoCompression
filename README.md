@@ -16,17 +16,12 @@ Para desarrollar esta práctica, hemos utilizado el IDE Intell IJ Idea y hemos b
 
 ## Ejecución
 
-Para la ejecución de nuestro algoritmo, se deben usar los comandos
-que se pueden encontrar en: 
+Para la ejecución de nuestro algoritmo, se deben ejecutar los comandos en la carpeta principal (donde está el archivo F1.jar).
+
+Para las opciones -i y -o es importante que se especifique todo el path, por ejemplo:
 
 `
-java -jar F1.jar -h 
-`
-
-Para la opción -o, es importante que se especifique todo el path, por ejemplo:
-
-`
-java -jar F1.jar -o /home/danielyeste/Desktop/Das/Test.zip
+java -jar F1.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --batch
 `
 
 Ejemplo para la ejecución por consola sin filtros:
@@ -34,6 +29,14 @@ Ejemplo para la ejecución por consola sin filtros:
 `
 java -jar F1.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --fps 60 -o /home/danielyeste/Desktop/Das/Tet.zip
 `
+
+Ejemplo para la ejecución por consola del codec:
+
+`
+-i /home/danielyeste/IdeaProjects/F1/Cubo.zip -o /home/danielyeste/Desktop/Das/Tet.zip --encode --decode --quality 7 --nTiles 16 --GOP 4 --seekRange 0 --fps 24
+`
+
+Hay un archivo .txt con más ejemplos más específicos listos para ejecutar, que son los que usamos en la demo final del proyecto.
 
 ## Especificaciones para la ejecución
 

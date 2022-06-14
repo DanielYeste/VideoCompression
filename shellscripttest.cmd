@@ -1,1 +1,0 @@
-java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --fps 24 -o C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Zipped.zip --encode --decode --quality 7 --nTiles 16 --GOP 2
