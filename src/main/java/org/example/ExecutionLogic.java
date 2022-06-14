@@ -16,7 +16,13 @@ public class ExecutionLogic {
     private ImageFilters imageFilters;
     private Encode encode;
     private Decode decode;
-
+    
+    /**
+     * ExecutionLogic initializer. Receives our DataHandler that contains the data that
+     * we need to run the whole program.
+     * @param dh
+     * @throws IOException
+     */
     public ExecutionLogic(DataHandler dh) throws IOException {
         this.dh = dh;
         this.fileUnzipper = new FileUnzipper(dh.getInputFilePath());
@@ -25,8 +31,12 @@ public class ExecutionLogic {
         this.encode = new Encode(dh.getnTiles(),dh.getGop(),dh.getQuality());
         this.decode = new Decode();
     }
-
-
+    
+    /**
+     * Holds the main thread. Calls methods sequentially following a little
+     * state machine similarity on execution.
+     * @throws IOException
+     */
     public void executionHandler() throws IOException {
         boolean executionOn = true;
         long startTime = System.nanoTime();
@@ -86,7 +96,10 @@ public class ExecutionLogic {
             state++;
         }
     }
-
+    
+    /**
+     * Compares the size of files. The comparison its between original images and encoded images.
+     */
     public void filesComparation(){
         long unEncodedlength = 0;
         Path currentRelativePath = Paths.get("");
@@ -120,7 +133,11 @@ public class ExecutionLogic {
         System.out.println("Encoded files size is: " + encodedlength+"bytes");
         System.out.println("Compression ratio is: " + ((double) unEncodedlength/encodedlength));
     }
-
+    
+    /**
+     * Calculates the peak noise ratio between the original images and the encoded images.
+     * @throws IOException
+     */
     public void peakNoiseRatio() throws IOException {
         PSNR psnr = new PSNR();
         Path currentRelativePath = Paths.get("");
