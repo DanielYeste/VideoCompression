@@ -19,11 +19,12 @@ public class VideoPlayer {
     Timer timer2;
     private double fps;
     boolean decoding;
-    
+
     /**
      * Initializes our video player with the datahandler to get all the information
      * that he needs.
-     * @param dataHandler
+     * @param fps Number of images per second.
+     * @param decoding Shows if we are decoding or not.
      */
     public VideoPlayer(int fps, boolean decoding){
         this.fps = 1000/fps;

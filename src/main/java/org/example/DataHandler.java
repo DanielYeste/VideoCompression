@@ -10,14 +10,12 @@ public class DataHandler {
     private int averaging;
     private boolean encode;
     private boolean decode;
-
     private int nTiles;
     private int gop;
     private int quality;
-
-
     private boolean batch;
-    
+    private int seekRange;
+
     /**
      * Initializes all the paramaters given form the argument line that we need to execute
      * the whole program and holds it to share it between the different objects.
@@ -36,7 +34,7 @@ public class DataHandler {
      * @param batch
      */
 
-    public DataHandler(String inputFilePath, String outputFilePath, int fps, int binarization, boolean negative, int averaging, boolean encode, boolean decode, int nTiles, int gop, int quality, boolean batch){
+    public DataHandler(String inputFilePath, String outputFilePath, int fps, int binarization, boolean negative, int averaging, boolean encode, boolean decode, int nTiles, int gop, int quality, boolean batch, int seekRange){
         this.inputFilePath = inputFilePath;
         this.outputFilePath = outputFilePath;
         this.fps = fps;
@@ -49,6 +47,7 @@ public class DataHandler {
         this.gop = gop;
         this.quality = quality;
         this.batch = batch;
+        this.seekRange = seekRange;
     }
 
 
@@ -81,6 +80,10 @@ public class DataHandler {
 
     public boolean isBatch() {
         return batch;
+    }
+
+    public int getSeekRange(){
+        return seekRange;
     }
 
 

@@ -10,10 +10,10 @@ java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompress
 Filter Negative + Video
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --negative --fps 24
 
-Filter Binarization = 200
+Filter Binarization = 200 + Video
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --binarization 200 --fps 24
 
-Filter Averaging = 3
+Filter Averaging = 3 + Video
 java -jar F1.jar -i C:\Users\salva\UB\Multimèdia\VideoCompression\VideoCompression\Cubo.zip --averaging 3 --fps 24
 
 Encode Quality = 7 nTiles = 16 GOP = 4

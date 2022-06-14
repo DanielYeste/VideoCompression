@@ -34,7 +34,8 @@ public class Main {
                         commandController.nTiles,
                         commandController.gop,
                         commandController.quality,
-                        commandController.batch);
+                        commandController.batch,
+                        commandController.seekRange);
                 ExecutionLogic logic = new ExecutionLogic(dh);
                 System.out.println("Ready for the execution");
                 logic.executionHandler();

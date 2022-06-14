@@ -20,19 +20,19 @@ Para la ejecución de nuestro algoritmo, se deben usar los comandos
 que se pueden encontrar en: 
 
 `
-java -jar VideCompression.jar -h 
+java -jar F1.jar -h 
 `
 
 Para la opción -o, es importante que se especifique todo el path, por ejemplo:
 
 `
-java -jar VideoCompression.jar -o /home/danielyeste/Desktop/Das/Test.zip
+java -jar F1.jar -o /home/danielyeste/Desktop/Das/Test.zip
 `
 
 Ejemplo para la ejecución por consola sin filtros:
 
 `
-java -jar VideoCompression.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --fps 60 -o /home/danielyeste/Desktop/Das/Tet.zip
+java -jar F1.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --fps 60 -o /home/danielyeste/Desktop/Das/Tet.zip
 `
 
 También se puede ejecutar desde el IDE con
@@ -52,4 +52,4 @@ se debe trabajar en un proyecto maven.
 · Jinahyay Ocap
 
 # Últimas correciones
-Respecto a la demostración se han añadido las opciones para seekRange de manera que el algoritmo se adecue a las peticiones. También se han fixeado los problemas con GOP(Group of Files).
+Respecto a la demostración se han añadido las opciones para seekRange (aunque sólo por teselas en vez de píxeles ya que no nos ha dado tiempo a cambiar toda la estructura interna de las teselas) de manera que el algoritmo se adecue a las peticiones. También se han fixeado los problemas con GOP(Group of Files).

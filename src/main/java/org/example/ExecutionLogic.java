@@ -16,7 +16,7 @@ public class ExecutionLogic {
     private ImageFilters imageFilters;
     private Encode encode;
     private Decode decode;
-    
+
     /**
      * ExecutionLogic initializer. Receives our DataHandler that contains the data that
      * we need to run the whole program.
@@ -28,16 +28,16 @@ public class ExecutionLogic {
         this.fileUnzipper = new FileUnzipper(dh.getInputFilePath());
         this.fileZipper = new FileZipper(dh.getOutputFilePath());
         this.imageFilters = new ImageFilters(dh.getBinarization(),dh.getNegative(),dh.getAveraging());
-        this.encode = new Encode(dh.getnTiles(),dh.getGop(),dh.getQuality());
+        this.encode = new Encode(dh.getnTiles(),dh.getGop(),dh.getQuality(), dh.getSeekRange());
         this.decode = new Decode();
     }
-    
+
     /**
      * Holds the main thread. Calls methods sequentially following a little
      * state machine similarity on execution.
      * @throws IOException
      */
-    public void executionHandler() throws IOException {
+    public void executionHandler() throws IOException, ClassNotFoundException {
         boolean executionOn = true;
         long startTime = System.nanoTime();
         while(executionOn) {
@@ -96,7 +96,7 @@ public class ExecutionLogic {
             state++;
         }
     }
-    
+
     /**
      * Compares the size of files. The comparison its between original images and encoded images.
      */
@@ -133,7 +133,7 @@ public class ExecutionLogic {
         System.out.println("Encoded files size is: " + encodedlength+"bytes");
         System.out.println("Compression ratio is: " + ((double) unEncodedlength/encodedlength));
     }
-    
+
     /**
      * Calculates the peak noise ratio between the original images and the encoded images.
      * @throws IOException

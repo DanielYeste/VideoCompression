@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class EncodedImages {
-    private int[][][] tesselsList;
-    private int[] eliminatedTessels;
+    private int[][][][] tesselsList;
+    private int[][] eliminatedTessels;
     private int tesselWidthSize;
     private int tesselHeightSize;
     private int nTiles;
@@ -20,7 +20,7 @@ public class EncodedImages {
      * @param file Arxiu amb la imatge que volem teselar.
      */
     public EncodedImages(int nTiles, File file){
-        this.eliminatedTessels = new int[nTiles];
+        this.eliminatedTessels = new int[(int) Math.sqrt(nTiles)][(int) Math.sqrt(nTiles)];
         this.nTiles = nTiles;
 
         // Teselem la imatge.
@@ -47,20 +47,22 @@ public class EncodedImages {
         this.tesselWidthSize = (int) (img.getWidth() / (Math.sqrt(nTiles)));
         this.tesselHeightSize = (int) (img.getHeight() / (Math.sqrt(nTiles)));
 
-        this.tesselsList = new int[nTiles][tesselWidthSize][tesselHeightSize];
+        this.tesselsList = new int[(int) Math.sqrt(nTiles)][(int) Math.sqrt(nTiles)][tesselWidthSize][tesselHeightSize];
 
         // Guardem a cada tesela una matriu width*height amb els píxels corresponents.
-        for (int i = 0; i < nTiles; i++){
-            for (int j = widthPointer; j < (tesselWidthSize + widthPointer); j++){
-                for(int l = heightPointer; l < (tesselHeightSize + heightPointer); l++) {
-                    tesselsList[i][j - widthPointer][l - heightPointer] = img.getRGB(j, l);
+        for(int k = 0; k < (int) Math.sqrt(nTiles); k++){
+            for (int i = 0; i < (int) Math.sqrt(nTiles); i++){
+                for (int j = widthPointer; j < (tesselWidthSize + widthPointer); j++){
+                    for(int l = heightPointer; l < (tesselHeightSize + heightPointer); l++) {
+                        tesselsList[k][i][j - widthPointer][l - heightPointer] = img.getRGB(j, l);
+                    }
                 }
-            }
 
-            widthPointer += tesselWidthSize;
-            if (widthPointer >= img.getWidth()){
-                widthPointer = 0;
-                heightPointer += tesselHeightSize;
+                widthPointer += tesselWidthSize;
+                if (widthPointer >= img.getWidth()){
+                    widthPointer = 0;
+                    heightPointer += tesselHeightSize;
+                }
             }
         }
     }
@@ -69,16 +71,17 @@ public class EncodedImages {
      * Returns the list of tessels.
      * @return tessels list.
      */
-    public int[][][] getTesselsList() {
+    public int[][][][] getTesselsList() {
         return tesselsList;
     }
 
     /**
-     * Guarda el número de tesela que s'ha eliminat.
-     * @param eliminatedTessels Número de tesela que s'elimina
+     * Saves the number of tile that has been erased.
+     * @param i Columna de la tesela.
+     * @param j Fila de la tesela.
      */
-    public void setEliminatedTessels(int eliminatedTessels) {
-        this.eliminatedTessels[eliminatedTessels] = 1;
+    public void setEliminatedTessels(int i, int j) {
+        this.eliminatedTessels[i][j] = 1;
     }
 
     /**
@@ -104,34 +107,36 @@ public class EncodedImages {
         int[] tesselsAvg = new int[eliminatedTessels.length];
 
         // Obté el color mig de cada tesela i el guarda en una llista.
-        for(int t = 0; t < eliminatedTessels.length - 1; t++){
-            int pixelCounter = 0;
-            int redAvg = 0;
-            int blueAvg = 0;
-            int greenAvg = 0;
+        for(int k = 0; k < eliminatedTessels.length; k++){
+            for(int t = 0; t < eliminatedTessels[k].length - 1; t++){
+                int pixelCounter = 0;
+                int redAvg = 0;
+                int blueAvg = 0;
+                int greenAvg = 0;
 
-            for (int i = 0; i < tesselWidthSize; i++){
-                for(int j = 0; j < tesselHeightSize; j++){
-                    redAvg += (0x00ff0000 & tesselsList[t][i][j]) >> 16;
-                    greenAvg += (0x0000ff00 & tesselsList[t][i][j]) >> 8;
-                    blueAvg += (0x000000ff & tesselsList[t][i][j]);
-                    pixelCounter += 1;
-                }
-            }
-            redAvg = redAvg / pixelCounter;
-            greenAvg = greenAvg / pixelCounter;
-            blueAvg = blueAvg / pixelCounter;
-
-            int p = (redAvg << 16) | (greenAvg << 8) | blueAvg;
-            tesselsAvg[t] = Integer.valueOf(p);
-        }
-
-        // Pinta cada tesela eliminada del seu color mig.
-        for (int t = 0; t < eliminatedTessels.length; t++){
-            if (eliminatedTessels[t] == 1){
                 for (int i = 0; i < tesselWidthSize; i++){
                     for(int j = 0; j < tesselHeightSize; j++){
-                        tesselsList[t][i][j] = tesselsAvg[t];
+                        redAvg += (0x00ff0000 & tesselsList[k][t][i][j]) >> 16;
+                        greenAvg += (0x0000ff00 & tesselsList[k][t][i][j]) >> 8;
+                        blueAvg += (0x000000ff & tesselsList[k][t][i][j]);
+                        pixelCounter += 1;
+                    }
+                }
+                redAvg = redAvg / pixelCounter;
+                greenAvg = greenAvg / pixelCounter;
+                blueAvg = blueAvg / pixelCounter;
+
+                int p = (redAvg << 16) | (greenAvg << 8) | blueAvg;
+                tesselsAvg[t] = Integer.valueOf(p);
+            }
+
+            // Pinta cada tesela eliminada del seu color mig.
+            for (int t = 0; t < eliminatedTessels.length; t++){
+                if (eliminatedTessels[k][t] == 1){
+                    for (int i = 0; i < tesselWidthSize; i++){
+                        for(int j = 0; j < tesselHeightSize; j++){
+                            tesselsList[k][t][i][j] = tesselsAvg[t];
+                        }
                     }
                 }
             }
@@ -152,20 +157,23 @@ public class EncodedImages {
         int widthPointer = 0;
 
         // Itera a través de la llista de teseles assignant cada píxel corresponent a la BI.
-        for(int t = 0; t < nTiles;t++) {
-            for (int j = widthPointer; j < (tesselWidthSize + widthPointer); j++){
-                for(int l = heightPointer; l < (tesselHeightSize + heightPointer); l++) {
-                    bufferedImage.setRGB(j, l, tesselsList[t][j - widthPointer][l - heightPointer] );
+        for(int k = 0; k < Math.sqrt(nTiles); k ++){
+            for(int t = 0; t < Math.sqrt(nTiles); t++) {
+                for (int j = widthPointer; j < (tesselWidthSize + widthPointer); j++){
+                    for(int l = heightPointer; l < (tesselHeightSize + heightPointer); l++) {
+                        bufferedImage.setRGB(j, l, tesselsList[k][t][j - widthPointer][l - heightPointer] );
+                    }
+                }
+
+                widthPointer += tesselWidthSize;
+
+                if (widthPointer>= w){
+                    widthPointer = 0;
+                    heightPointer+= tesselHeightSize;
                 }
             }
-
-            widthPointer += tesselWidthSize;
-
-            if (widthPointer>= w){
-                widthPointer = 0;
-                heightPointer+= tesselHeightSize;
-            }
         }
+
 
         return bufferedImage;
     }

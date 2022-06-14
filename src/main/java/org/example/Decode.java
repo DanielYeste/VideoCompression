@@ -4,9 +4,7 @@ import me.tongfei.progressbar.ProgressBar;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +15,7 @@ public class Decode {
     private int nTiles;
     private int gop;
     private ArrayList<EncodedImages> encodedListedImages;
+    private EncodingData encodingData;
 
     /**
      * Intializes the decoder.
@@ -29,7 +28,7 @@ public class Decode {
      * Main process of the decoder.
      * @throws IOException
      */
-    public void decode() throws IOException {
+    public void decode() throws IOException, ClassNotFoundException {
         Path currentRelativePath = Paths.get("");
 
         String destDir = currentRelativePath.toAbsolutePath()+"/EncodedImages";
@@ -39,18 +38,22 @@ public class Decode {
         File[] files = f.listFiles();
 
         // Opens the file where we saved the information about tessel substitution.
-        File file = new File("encode_information.txt");
-        Scanner sc = new Scanner(file);
+        FileInputStream fin = new FileInputStream(destDir + "/encodingData");
+        ObjectInputStream ois = new ObjectInputStream(fin);
+        this.encodingData= (EncodingData) ois.readObject();
+        ois.close();
+
 
         // Reads the first line to get the number of tessels and GOP for the decoding
-        String line = sc.nextLine();
-        this.nTiles = Integer.valueOf(line.split(" ")[0]);
-        this.gop = Integer.valueOf(line.split(" ")[1]);
+        this.nTiles = encodingData.getnTiles();
+        this.gop = encodingData.getGop();
 
         // From the coded images, we create a list with the tesselated images.
         for(File image: files) {
-            EncodedImages encodedImage = new EncodedImages(nTiles, image);
-            encodedListedImages.add(encodedImage);
+            if(image.getName().contains(".")){
+                EncodedImages encodedImage = new EncodedImages(nTiles, image);
+                encodedListedImages.add(encodedImage);
+            }
         }
 
         // Rebuild the images.
@@ -64,33 +67,23 @@ public class Decode {
      * Rebuilds the images from the encoded tesselated images and our data file with the information.
      * @throws FileNotFoundException
      */
-    public void rebuildImages() throws FileNotFoundException {
+    public void rebuildImages() throws IOException, ClassNotFoundException {
         ProgressBar pb = new ProgressBar("Decoding files", 100); // name, initial max
         pb.start();
 
-        // Obrim el fitxer txt que conté la informació de les teseles substituïdes.
-        File file = new File("encode_information.txt");
-        Scanner sc = new Scanner(file);
-
-        // Llegim la primera línia que conté la quantitat de teseles per imatge i el GOP.
-        // No fa falta que guardem les dades ja que les hem guardat al principi del mètode decode(),
-        // tot i així l'hem de llegir per a començar a llegir els valors de les teseles substituïdes.
-        String line = sc.nextLine();
-
-        // Itera per a cada línia del fitxer txt per a reconstruir les imatges tesela a tesela.
-        while(sc.hasNextLine()){
-            line = sc.nextLine();
-
-            // De cada línia obtenim el número d'imatge a la que correspon la tesela
-            // i el número de tesela que hem de recuperar
-            int numImage = Integer.valueOf(line.split(" ")[0]);
-            int numTessel = Integer.valueOf(line.split(" ")[1]);
+        // Iterem per la llista de dades amb la info de cada tesela.
+        for(int[] data: encodingData.getData()){
+            int numImage = data[0];
+            int row = data[1];
+            int col = data[2];
+            int prevRow = data[3];
+            int prevCol = data[4];
 
             // Agafem la tesela corresponent al número de tesela que hem de recuperar de la imatge model
             // i la posem a la imatge a reconstruir.
-            for(int i = 0; i < encodedListedImages.get(numImage).getTesselsList()[numTessel].length; i++){
-                for(int j = 0; j < encodedListedImages.get(numImage).getTesselsList()[numTessel][i].length; j++){
-                    encodedListedImages.get(numImage).getTesselsList()[numTessel][i][j] = encodedListedImages.get(numImage - (numImage % gop)).getTesselsList()[numTessel][i][j];
+            for(int i = 0; i < encodedListedImages.get(numImage).getTesselsList()[row][col].length; i++){
+                for(int j = 0; j < encodedListedImages.get(numImage).getTesselsList()[row][col][i].length; j++){
+                    encodedListedImages.get(numImage).getTesselsList()[row][col][i][j] = encodedListedImages.get(numImage - 1).getTesselsList()[prevRow][prevCol][i][j];
                 }
             }
 
