@@ -40,11 +40,14 @@ jdk 1.8 y es un tipo de proyecto maven, un organizador de
 paquetes de java. Para su correcta importación y ejecución
 se debe trabajar en un proyecto maven.
 `
-##Libreras utilizadas
+## Libreras utilizadas
 
-·Jcommander
-·Tongfei ProgressBar
-.Apache Math
+· Jcommander
+
+· Tongfei ProgressBar
+
+· Apache Math
+
 · Jinahyay Ocap
 
 # Últimas correciones
