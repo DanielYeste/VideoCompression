@@ -5,6 +5,12 @@ import com.beust.jcommander.ParameterException;
 import java.util.Scanner;
 
 public class Main {
+    /**
+     * Main method that starts the execution. Gets the arguments and initializes the main thread
+     * ExecutionLogic.
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         CommandController commandController = new CommandController();
         JCommander jComm;
