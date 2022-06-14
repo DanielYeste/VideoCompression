@@ -18,15 +18,26 @@ import javax.imageio.ImageIO;
 
 public class ImageFilters {
     private int binarization;
+    
     private boolean negative;
 
     private int averaging;
+    
+    /**
+     * Initialize our ImageFiltersHandler with the needed data to execute the filters.
+     * @param b
+     * @param n
+     * @param averaging
+     */
     public ImageFilters(int b, boolean n, int averaging){
         this.binarization = b;
         this.negative = n;
         this.averaging = averaging;
     }
     
+    /**
+     * Controls the call on which filter must call depending on the given arguments.
+     */
     public void handleFilters(){
         if(binarization == 0 && !negative && averaging == 0){
             System.out.println("Filter non-applied");
@@ -38,7 +49,12 @@ public class ImageFilters {
             applyAveraging();
         }
     }
-
+    
+    /**
+     * Applies a negative filter on all images.
+     * This filter applies the maxValueOfPixel-valueOfPixel
+     * on each channel so we get the inverse value of the RGB.
+     */
     private void applyNegative() {
         ProgressBar pb = new ProgressBar("Negative filter", 100); // name, initial max
         pb.start();
@@ -93,6 +109,11 @@ public class ImageFilters {
         pb.stop();
     }
 
+    /**
+     * Applies a binaritzation filter on all images.
+     * Gets the values of each RGB channel and determines if we change it to white(255) or black(0),
+     * depending on the threshold.
+     */
     private void applyBinarization() {
         ProgressBar pb = new ProgressBar("Binarizing images", 100); // name, initial max
         pb.start();
@@ -145,7 +166,13 @@ public class ImageFilters {
         }
         pb.stop();
     }
-
+    
+    /**
+     * Applies an averaging filter on all images.
+     * It takes every pixel and check their 'n' surrounding pixels and average the color,
+     * setting that color in the pixel that we are iterating for.
+     * 'n' is determined by the arguments given.
+     */
     private void applyAveraging(){
         ProgressBar pb = new ProgressBar("Averaging images", 100); // name, initial max
         pb.start();
