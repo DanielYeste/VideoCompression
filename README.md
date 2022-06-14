@@ -33,6 +33,7 @@ Ejemplo para la ejecución por consola sin filtros:
 
 `
 java -jar VideoCompression.jar -i /home/danielyeste/IdeaProjects/F1/Cubo.zip --fps 60 -o /home/danielyeste/Desktop/Das/Tet.zip
+`
 
 También se puede ejecutar desde el IDE con
 argumentos sin ningun problema. El proyecto se ha realizado en 
