@@ -19,14 +19,14 @@ public class Decode {
     private ArrayList<EncodedImages> encodedListedImages;
 
     /**
-     * Inicialitza el decode.
+     * Intializes the decoder.
      */
     public Decode(){
         this.encodedListedImages = new ArrayList<>();
     }
 
     /**
-     * Procés íntegre del decodificador.
+     * Main process of the decoder.
      * @throws IOException
      */
     public void decode() throws IOException {
@@ -38,32 +38,30 @@ public class Decode {
 
         File[] files = f.listFiles();
 
-        // Obrim el fitxer on tenim guardada tota la informació de les teseles substituïdes.
+        // Opens the file where we saved the information about tessel substitution.
         File file = new File("encode_information.txt");
         Scanner sc = new Scanner(file);
 
-        // Llegim la primera línia que ens indicarà quantes teseles i quin GOP haurem de fer servir per a reconstruir
-        // les imatges.
+        // Reads the first line to get the number of tessels and GOP for the decoding
         String line = sc.nextLine();
         this.nTiles = Integer.valueOf(line.split(" ")[0]);
         this.gop = Integer.valueOf(line.split(" ")[1]);
 
-        // A partir de les imatges codificades, crea una llista d'imatges teseleades.
+        // From the coded images, we create a list with the tesselated images.
         for(File image: files) {
             EncodedImages encodedImage = new EncodedImages(nTiles, image);
             encodedListedImages.add(encodedImage);
         }
 
-        // Reconstrueix les imatges.
+        // Rebuild the images.
         rebuildImages();
 
-        // Guarda les imatges reconstruides en una carpeta per a poder-les veure.
+        // Save the rebuilded images in a file.
         saveDecodedImages();
     }
 
     /**
-     * Reconstrueix les imatges a partir de les imatges codificades teselades i un txt amb la informació de les
-     * teseles substituides.
+     * Rebuilds the images from the encoded tesselated images and our data file with the information.
      * @throws FileNotFoundException
      */
     public void rebuildImages() throws FileNotFoundException {
@@ -103,7 +101,7 @@ public class Decode {
     }
 
     /**
-     * Agafa les imatges teselades, les converteix en imatges en format jpg i les guarda en una carpeta.
+     * Take the tesselated images, convert them to jpg and saves them in a file.
      * @throws IOException
      */
     public void saveDecodedImages() throws IOException {
