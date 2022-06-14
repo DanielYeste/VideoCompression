@@ -14,11 +14,19 @@ import java.util.zip.ZipOutputStream;
 public class FileZipper {
     private String destDir;
 
+    /**
+     * Initializes our FileZipper with the specified output path of the zip.
+     * @param outputFilePath
+     */
     public FileZipper(String outputFilePath){
         this.destDir = outputFilePath;
     }
 
-
+    /**
+     * Zip all the needed files to an specified output path.
+     * @param fileName
+     * @throws IOException
+     */
     public void zipper(String fileName) throws IOException {
         ProgressBar pb = new ProgressBar("Zipping files", 100); // name, initial max
         pb.start();
